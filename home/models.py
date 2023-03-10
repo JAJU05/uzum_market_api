@@ -22,6 +22,10 @@ class Product(Model):
     seller = ForeignKey('Seller', CASCADE)
     orders = IntegerField(default=1)
 
+    class Meta:
+        # ordering = ('-created_at',)
+        db_table = 'product'
+
 
 class Seller(Model):
     name = CharField(max_length=255)
@@ -31,7 +35,6 @@ class Seller(Model):
 
 class Cart(Model):
     product = ForeignKey('home.Product', CASCADE)
-    user = ForeignKey('User', CASCADE)
     count = IntegerField(default=1)
 
     class Meta:
@@ -40,12 +43,13 @@ class Cart(Model):
 
 class Favourite(Model):
     product = ForeignKey('home.Product', CASCADE)
-    user = ForeignKey('User', CASCADE)
 
     class Meta:
         db_table = 'favourite'
 
 
 class ProductImages(Model):
-    product = ForeignKey('home.Product', CASCADE)
+    product = ForeignKey('Product', CASCADE)
     image = ImageField(upload_to='products/images/')
+
+
